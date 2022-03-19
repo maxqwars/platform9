@@ -1,0 +1,28 @@
+{
+  "name": "platform9",
+  "version": "0.0.1",
+  "description": "",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/maxqwars/platform9.git"
+  },
+  "author": "Maxim \\\"maxqwars\\\" Maximenko <maxqwars@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/maxqwars/platform9/issues"
+  },
+  "homepage": "https://github.com/maxqwars/platform9#readme",
+  "devDependencies": {
+    "browser-sync": "^2.27.9",
+    "del": "^6.0.0",
+    "gulp": "^4.0.2",
+    "gulp-esbuild": "^0.10.2",
+    "gulp-pug": "^5.0.0",
+    "gulp-sass": "^5.1.0",
+    "sass": "^1.49.9"
+  }
+}
