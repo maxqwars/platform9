@@ -1,34 +1,17 @@
-import {
-  reloadBrowser,
-  startBrowserSync,
-  streamStyles,
-} from "./gulp/tasks/browserSync.mjs";
-import { compilePug } from "./gulp/tasks/compilePug.mjs";
 import gulp from "gulp";
+import startBrowserSync from "./gulp/tasks/startBrowserSync.mjs";
+import HTMLWorkflow from "./gulp/tasks/HTMLWorkflow.mjs";
+import stylesWorkflow from "./gulp/tasks/stylesWorkflow.mjs";
+import removeBuild from "./gulp/tasks/removeBuild.mjs";
+import scriptsWorkflow from "./gulp/tasks/scriptsWorkflow.mjs";
 import paths from "./gulp/paths.mjs";
-import reset from "./gulp/tasks/reset.mjs";
-import { compileSCSS } from "./gulp/tasks/compileSCSS.mjs";
-import { compileJS } from "./gulp/tasks/compileJS.mjs";
 
-const { watch, series } = gulp;
-
-// Configure observer
-const observer = async () => {
-  watch(
-    [`${paths.buildDir}/*.html`, `${paths.buildDir}/js/*.js`],
-    reloadBrowser
-  );
-  watch(paths.observer.pages, compilePug);
-  watch(paths.observer.scss, series(compileSCSS, streamStyles));
-  watch(paths.observer.js, series(compileJS, reloadBrowser));
+const watcher = () => {
+  gulp.watch(paths.watch.pages, HTMLWorkflow);
+  gulp.watch(paths.watch.scss, stylesWorkflow);
+  gulp.watch(paths.watch.js, scriptsWorkflow);
 };
 
-// Define default task
-export default series(
-  reset,
-  compilePug,
-  compileSCSS,
-  compileJS,
-  startBrowserSync,
-  observer
-);
+const workflows = gulp.parallel(HTMLWorkflow, stylesWorkflow, scriptsWorkflow);
+
+export default gulp.series(removeBuild, workflows, startBrowserSync, watcher);

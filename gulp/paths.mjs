@@ -1,24 +1,28 @@
-import { resolve, join } from "path";
+import { join, resolve } from "path";
 
-const SRC_DIR = join(resolve(), "/src");
-const BUILD_DIR = join(resolve(), "/build");
+const SRC_ROOT  = join(resolve(), "/src");
+const DEST_ROOT = join(resolve(), "/build");
 
 export default {
-  srcDir: SRC_DIR,
-  buildDir: BUILD_DIR,
-  src: {
-    pages: `${join(SRC_DIR, "/pages")}/*.pug`,
-    scss: `${join(SRC_DIR, "/scss")}/**/*.+(scss|sass)`,
-    js: `${join(SRC_DIR, "/js")}/main.js`,
+  clean   : DEST_ROOT,
+  srcRoot : SRC_ROOT,
+  destRoot: DEST_ROOT,
+  src     : {
+    pages: `${join(SRC_ROOT, "/pages")}/*.pug`,
+    scss : `${join(SRC_ROOT, "/scss")}/**/*.+(scss|sass)`,
+    js   : `${join(SRC_ROOT, "/js")}/main.+(js|ts)`,
   },
-  build: {
-    pages: BUILD_DIR,
-    css: join(BUILD_DIR, "/css"),
-    js: join(BUILD_DIR, "/js"),
+  dest: {
+    pages: DEST_ROOT,
+    css  : join(DEST_ROOT, "css"),
+    js   : join(DEST_ROOT, "js"),
   },
-  observer: {
-    pages: `${join(SRC_DIR, "/pages")}/*.pug`,
-    scss: `${join(SRC_DIR, "/scss")}/**/*.+(scss|sass)`,
-    js: `${join(SRC_DIR, "/js")}/main.js`,
+  watch: {
+    pages: [
+      `${join(SRC_ROOT, "/pages")}/*.pug`,
+      `${join(SRC_ROOT, "/includes")}/*.pug`,
+    ],
+    scss: `${join(SRC_ROOT, "/scss")}/**/*.+(scss|sass)`,
+    js  : `${join(SRC_ROOT, "/js")}/**/*.+(js|ts)`,
   },
 };
