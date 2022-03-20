@@ -1,3 +1,5 @@
-# Platform9
+<center>
+  <img src="platform9.svg" />
+</center>
 
-## Web projects build system
+> TODO: Write README.md
