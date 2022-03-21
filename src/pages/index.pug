@@ -4,12 +4,23 @@ html(lang="en")
     meta(charset="UTF-8")
     meta(http-equiv="X-UA-Compatible", content="IE=edge")
     meta(name="viewport", content="width=device-width, initial-scale=1.0")
-    title Welcome to platform9
+    title
+      | Thanks for downloading Platform9
     link(rel="stylesheet", href="css/main.min.css")
-    script(src="/js/main.min.js" defer) 
   body
-    include ../includes/header
-    
-    main
-      h1 Platform9
-      h5 platform9 - A fast environment for creating web projects
+
+    .intro
+      .intro__message
+        .intro__image_header
+          img(src="/img/platform9.svg", alt="Platform9 logo").intro__img
+        .intro__about 
+          h2
+            | Thanks for using platform 9
+          p
+            | Platform9 is a ready-made template for website layout containing a fully configured and ready-to-work Gulp.
+        .intro__footer
+          p 
+            | Platform9 made with ❤ from 
+            a(href="") Surrogate 
+
+    script(src="/js/main.min.js" defer)

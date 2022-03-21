@@ -10,6 +10,7 @@ import webp from "gulp-webp";
 export default () => {
   return gulp
     .src(paths.src.images)
+    .pipe(notify('Starting raster images processing...'))
     .pipe(
       plumber(
         notify.onError({

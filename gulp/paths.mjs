@@ -9,7 +9,7 @@ export default {
   destRoot: DEST_ROOT,
   src     : {
     pages : `${join(SRC_ROOT, "/pages")}/*.pug`,
-    scss  : `${join(SRC_ROOT, "/scss")}/**/*.+(scss|sass)`,
+    scss  : `${join(SRC_ROOT, "/scss")}/**/*.+(scss|sass|css)`,
     js    : `${join(SRC_ROOT, "/js")}/main.+(js|ts)`,
     images: `${join(SRC_ROOT, "/img")}/**/*.+(jpg|jpeg|png|gif|webp)`,
     svg   : `${join(SRC_ROOT, "/img")}/**/*.svg`,
@@ -25,7 +25,7 @@ export default {
       `${join(SRC_ROOT, "/pages")}/*.pug`,
       `${join(SRC_ROOT, "/includes")}/*.pug`,
     ],
-    scss  : `${join(SRC_ROOT, "/scss")}/**/*.+(scss|sass)`,
+    scss  : `${join(SRC_ROOT, "/scss")}/**/*.+(scss|sass|css)`,
     js    : `${join(SRC_ROOT, "/js")}/**/*.+(js|ts)`,
     images: `${join(SRC_ROOT, "/img")}/**/*.+(jpg|jpeg|png|gif|webp)`,
     svg   : `${join(SRC_ROOT, "/img")}/**/*.svg`,

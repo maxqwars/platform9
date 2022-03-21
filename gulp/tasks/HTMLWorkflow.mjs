@@ -10,6 +10,7 @@ import versionNumber from "gulp-version-number";
 export default () => {
   return gulp
     .src(paths.src.pages)
+    .pipe(notify('Starting markup processing...'))
     .pipe(
       plumber(
         notify.onError({
@@ -18,7 +19,6 @@ export default () => {
         })
       )
     )
-    .pipe(changed(paths.dest.pages))
     .pipe(
       pug({
         pretty: true,

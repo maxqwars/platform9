@@ -9,6 +9,7 @@ import paths from "../paths.mjs";
 
 export default () => {
   return gulp.src(paths.src.js)
+    .pipe(notify('Starting scripts processing...'))
     .pipe(
       plumber(
         notify.onError({

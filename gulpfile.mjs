@@ -11,12 +11,15 @@ import esbuild from 'gulp-esbuild'
 import groupCSSMediaQueries from 'gulp-group-css-media-queries'
 import gulp from 'gulp'
 import gulpSass from 'gulp-sass'
+import imagemin from 'gulp-imagemin'
+import newer from 'gulp-newer'
 import notify from 'gulp-notify'
 import plumber from 'gulp-plumber'
 import pug from 'gulp-pug'
 import rename from 'gulp-rename'
 import sourcemaps from 'gulp-sourcemaps'
 import versionNumber from 'gulp-version-number'
+import webp from 'gulp-webp'
 
 /* -------------------------------------------------------------------------- */
 /*                                  Configure                                 */
@@ -42,7 +45,7 @@ const paths = {
     src: {
         includes: `${srcDir}/includes/**/*.pug`,
         pages   : `${srcDir}/pages/**/*.pug`,
-        images  : `${srcDir}/images/**/*.pug`,
+        images  : `${srcDir}/images/**/*.{jpg,jpeg,png,gif,webp}`,
         scripts : `${srcDir}/scripts/**/*.{js,ts}`,
         svg     : `${srcDir}/images/**/*.svg`,
         styles  : `${srcDir}/styles/**/*.{sass,scss,css}`
@@ -56,7 +59,7 @@ const paths = {
     },
     watch: {
         markup : [`${srcDir}/includes/**/*.pug`, `${srcDir}/pages/**/*.pug`],
-        images : [`${srcDir}/images/**/*.pug`, `${srcDir}/images/**/*.svg`],
+        images : [`${srcDir}/images/**/*.{jpg,jpeg,png,gif,webp}`, `${srcDir}/images/**/*.svg`],
         scripts: `${srcDir}/scripts/**/*.{js,ts}`,
         styles : `${srcDir}/styles/**/*.{sass,scss,css}`
     },
@@ -166,6 +169,37 @@ export const compileScripts = () => {
 }
 
 /* -------------------------------------------------------------------------- */
+/*                          Raster images processing                          */
+/* -------------------------------------------------------------------------- */
+export const rasterImagesProcessing = () => {
+    return src(paths.src.images)
+        .pipe(
+            plumber(
+                notify.onError({
+                    title: "Error in rasterImageProcessing task",
+                    message: "<%= error.message %>",
+                })
+            )
+        )
+        .pipe(newer(paths.dist.images))
+        .pipe(webp())
+        .pipe(dest(paths.dist.images))
+        .pipe(src(paths.src.images))
+        .pipe(newer(paths.dist.images))
+        .pipe(
+            imagemin({
+                progressive: true,
+                svgoPlugins: [{ removeViewBox: false }],
+                interlaced: true,
+                optimizationLevel: 3,
+            })
+        )
+        .pipe(plumber.stop())
+        .pipe(gulp.dest(paths.dist.images))
+        .pipe(bs.stream());
+}
+
+/* -------------------------------------------------------------------------- */
 /*                                Service tasks                               */
 /* -------------------------------------------------------------------------- */
 
@@ -179,6 +213,7 @@ export const watcher = () => {
     watch(paths.watch.markup, compilePug)
     watch(paths.watch.styles, compileStyles)
     watch(paths.watch.scripts, compileScripts)
+    watch(paths.watch.images, rasterImagesProcessing)
 }
 
 /* -------------------------------------------------------------------------- */
@@ -189,7 +224,7 @@ export const watcher = () => {
 const beforeStart = series(clear, startBrowserSync)
 
 // ? Run after start development workflow
-const afterStart = series(compilePug, compileStyles, compileScripts, watcher)
+const afterStart = series(compilePug, compileStyles, compileScripts, rasterImagesProcessing, watcher)
 
 /* -------------------------------------------------------------------------- */
 /*                                Default task                                */

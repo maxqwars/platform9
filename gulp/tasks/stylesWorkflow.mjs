@@ -16,6 +16,7 @@ const scss = gulpSass(sassCompiler);
 export default () => {
   return gulp
     .src(paths.src.scss)
+    .pipe(notify('Starting styles processing...'))
     .pipe(
       plumber(
         notify.onError({
@@ -24,7 +25,6 @@ export default () => {
         })
       )
     )
-    .pipe(changed(paths.dest.css))
     .pipe(scss())
     .pipe(groupCSSMediaQueries())
     .pipe(

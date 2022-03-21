@@ -9,6 +9,7 @@ import svgmin from "gulp-svgmin";
 export default () => {
   return gulp
     .src(paths.src.svg)
+    .pipe(notify('Starting svg processing...'))
     .pipe(
       plumber(
         notify.onError({
