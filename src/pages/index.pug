@@ -6,21 +6,53 @@ html(lang="en")
     meta(name="viewport", content="width=device-width, initial-scale=1.0")
     title
       | Thanks for downloading Platform9
-    link(rel="stylesheet", href="css/main.min.css")
-  body
-
-    .intro
-      .intro__message
-        .intro__image_header
-          img(src="/img/platform9.svg", alt="Platform9 logo").intro__img
-        .intro__about 
-          h2
-            | Thanks for using platform 9
-          p
-            | Platform9 is a ready-made template for website layout containing a fully configured and ready-to-work Gulp.
-        .intro__footer
-          p 
-            | Platform9 made with ❤ from 
-            a(href="") Surrogate 
-
+    link(rel="icon" href="/img/platform9.svg" type="image/svg+xml")
+    <link rel="stylesheet" href="/css/main.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">    
     script(src="/js/main.min.js" defer)
+  body.grey.darken-4.white-text
+    nav.grey.darken-4
+      .container
+        .nav-wrapper
+          a.brand-logo.left
+            img(src="/img/platform9.svg", alt="" style="height: 42px; margin: 10px; width: auto;")
+          ul#nav-mobile.right.hide-on-med-and-down
+            li
+              a.yellow-text
+                <i class="material-icons">description</i>
+            li
+              a.black-text.yellow.waves-effect.waves-light.btn
+                b
+                  | GitHub
+      
+    //- Main
+    .container      
+      section.section
+        .row
+          .col.s12.m4
+            .icon-block
+              h2.center.yellow-text
+                i.material-icons(style="font-size: inherit;") flash_on
+              h5.center
+                | Speed
+              p.light
+                | TODO
+          .col.s12.m4
+              .icon-block
+                h2.center.yellow-text
+                  i.material-icons(style="font-size: inherit;") power
+                h5.center
+                  | Flexibility
+                p.light
+                  | TODO
+          .col.s12.m4
+              .icon-block
+                h2.center.yellow-text
+                  i.material-icons(style="font-size: inherit;") all_inclusive
+                h5.center
+                  | All in one
+                p.light
+                  | TODO
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>

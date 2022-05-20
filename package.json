@@ -3,7 +3,10 @@
   "version": "0.0.1",
   "description": "",
   "main": "gulpfile.js",
-  "scripts": {},
+  "scripts": {
+    "dev": "cross-env NODE_ENV=development gulp",
+    "build": "cross-env NODE_ENV=production gulp"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/maxqwars/platform9.git"
@@ -16,6 +19,7 @@
   "homepage": "https://github.com/maxqwars/platform9#readme",
   "devDependencies": {
     "browser-sync": "^2.27.9",
+    "cross-env": "^7.0.3",
     "del": "^6.0.0",
     "gulp": "^4.0.2",
     "gulp-autoprefixer": "^8.0.0",

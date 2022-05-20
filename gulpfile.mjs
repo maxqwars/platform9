@@ -36,7 +36,7 @@ const { src, dest, parallel, series, watch } = gulp;
 /*                              Global variables                              */
 /* -------------------------------------------------------------------------- */
 
-const mode = "development"; // Platform9 work mode
+const mode = process.env.NODE_ENV || "production"; // Platform9 work mode
 const distDir = "./build"; // Build dir
 const srcDir = "./src"; // Source dir
 
@@ -47,7 +47,7 @@ const paths = {
     includes: `${srcDir}/includes/**/*.pug`,
     pages: `${srcDir}/pages/**/*.pug`,
     images: `${srcDir}/images/**/*.{jpg,jpeg,png,gif,webp}`,
-    scripts: `${srcDir}/scripts/**/*.{js,ts}`,
+    scripts: `${srcDir}/scripts/**/*.{js,mjs,mts,ts}`,
     svg: `${srcDir}/images/**/*.svg`,
     styles: `${srcDir}/styles/**/*.{sass,scss,css}`,
   },
@@ -61,7 +61,7 @@ const paths = {
   watch: {
     markup: [`${srcDir}/includes/**/*.pug`, `${srcDir}/pages/**/*.pug`],
     images: `${srcDir}/images/**/*.{jpg,jpeg,png,gif,webp}`,
-    scripts: `${srcDir}/scripts/**/*.{js,ts}`,
+    scripts: `${srcDir}/scripts/**/*.{js,mjs,mts,ts}`,
     styles: `${srcDir}/styles/**/*.{sass,scss,css}`,
     svg: `${srcDir}/images/**/*.svg`,
   },
@@ -176,7 +176,8 @@ export const compileScripts = () => {
     )
     .pipe(
       esbuild({
-        minify: mode !== "development",
+        minify: mode === "production",
+        format: "esm",
         // TODO: Add sourcemaps support
       })
     )
@@ -264,7 +265,13 @@ export const watcher = () => {
 /* -------------------------------------------------------------------------- */
 
 // ? Run before start development workflow
-const beforeStart = series(clear, startBrowserSync);
+const beforeStart = series(
+  clear,
+  startBrowserSync,
+  compilePug,
+  compileStyles,
+  compileScripts
+);
 
 // ? Run after start development workflow
 const afterStart = series(
@@ -284,6 +291,6 @@ const afterStart = series(
 export default series(beforeStart, afterStart);
 
 export const debug = (done) => {
-  console.log(paths);
+  console.log(process.env.NODE_ENV);
   done();
 };
